@@ -7,7 +7,7 @@ on:
   # 觸發條件 2：定時自動觸發 (北京时间每天早上 8:00 执行)
   # 注：GitHub 使用的是 UTC 時間，北京时间 (UTC+8) 早上 8 点就是 UTC 的 0:00
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '15 16 * * *'
 
 jobs:
   run-weather-bot:

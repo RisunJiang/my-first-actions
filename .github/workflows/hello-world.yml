@@ -1,0 +1,16 @@
+name: 我的第一個自動化任務
+
+# 觸發條件：當有人點擊 GitHub 網頁上的按鈕時執行（手動觸發）
+on:
+  workflow_dispatch:
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest # 借一台免費的 Linux 電腦
+
+    steps:
+      - name: 步驟一：跟世界打招呼
+        run: echo "Hello World! GitHub Actions 順利執行了！"
+
+      - name: 步驟二：印出目前時間
+        run: date

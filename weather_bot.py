@@ -1,7 +1,7 @@
 import json
 import urllib.request
 
-print("🌧️ 開始抓取今日天氣資訊...")
+print("🌧️ 开始抓取今日天气信息...")
 
 # Open-Meteo 天津天气 API
 url = "https://api.open-meteo.com/v1/forecast?latitude=39.0707&longitude=117.1527&current_weather=true"
@@ -13,7 +13,7 @@ req = urllib.request.Request(
 )
 
 try:
-    # 直接使用預設的 urlopen，不需要設定 Proxy
+    # 直接使用预设的 urlopen，不需要设定 Proxy
     with urllib.request.urlopen(req) as response:
         data = json.loads(response.read().decode())
         current = data["current_weather"]

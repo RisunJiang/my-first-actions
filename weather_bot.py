@@ -27,3 +27,4 @@ try:
         print("🎉 天氣資料抓取成功！")
 except Exception as e:
     print(f"❌ 抓取失敗，錯誤原因: {e}")
+

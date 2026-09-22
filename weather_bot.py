@@ -10,19 +10,28 @@ proxy_pool = cycle(proxies)
 
 print("🌧️ 開始抓取今日天氣資訊...")
 
-# 使用免費、免密鑰的國際天氣 API 抓取台北天氣
-url = "https://open-meteo.com"
+# 修正 1：使用真正的 API 網址 (附帶台北的經緯度與開啟 current_weather)
+url = "https://api.open-meteo.com/v1/forecast?latitude=25.0330&longitude=121.5654&current_weather=true"
 
-# 關鍵改動：建立一個 Request 物件，並加入 User-Agent 標頭，偽裝成一般的電腦 Chrome 瀏覽器
+# 修正 2：從 proxy_pool 中取出一個代理伺服器 IP
+proxy = next(proxy_pool)
+
+# 修正 3：正確使用 urllib 設定 Proxy 的方式
+proxy_handler = urllib.request.ProxyHandler({
+    "http": proxy,
+    "https": proxy
+})
+opener = urllib.request.build_opener(proxy_handler)
+
+# 建立 Request 物件並加入 User-Agent，不再傳入 proxies 參數
 req = urllib.request.Request(
     url, 
-    headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'},
-    proxies={"http": proxy, "https": proxy}
+    headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
 )
 
 try:
-    # 這裡改成讀取我們偽裝過的 req，而不是原本的 url
-    with urllib.request.urlopen(req) as response:
+    # 修正 4：使用我們帶有 proxy 的 opener 來發送請求，而不是原本的 urlopen
+    with opener.open(req) as response:
         data = json.loads(response.read().decode())
         current = data["current_weather"]
         temp = current["temperature"]
@@ -33,6 +42,6 @@ try:
         print(f"💨 目前風速: {windspeed} km/h")
         print("==========================")
         print("🎉 天氣資料抓取成功！")
+        
 except Exception as e:
     print(f"❌ 抓取失敗，錯誤原因: {e}")
-

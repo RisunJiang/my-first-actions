@@ -3,8 +3,8 @@ import urllib.request
 
 print("🌧️ 開始抓取今日天氣資訊...")
 
-# Open-Meteo 台北天氣 API
-url = "https://api.open-meteo.com/v1/forecast?latitude=25.0330&longitude=121.5654&current_weather=true"
+# Open-Meteo 天津天气 API
+url = "https://api.open-meteo.com/v1/forecast?latitude=39.0707&longitude=117.1527&current_weather=true"
 
 # 建立 Request 物件並加入 User-Agent
 req = urllib.request.Request(
@@ -21,10 +21,10 @@ try:
         windspeed = current["windspeed"]
         
         print("====== 今日天氣報告 ======")
-        print(f"🌡️ 目前氣溫: {temp} °C")
-        print(f"💨 目前風速: {windspeed} km/h")
+        print(f"🌡️ 目前气温: {temp} °C")
+        print(f"💨 目前风速: {windspeed} km/h")
         print("==========================")
-        print("🎉 天氣資料抓取成功！")
+        print("🎉 天气资料抓取成功！")
         
 except Exception as e:
-    print(f"❌ 抓取失敗，錯誤原因: {e}")
+    print(f"❌ 抓取失败，错误原因: {e}")
